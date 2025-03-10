@@ -8,33 +8,27 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 
-// Admin Register API (Create New Admin)
 router.post('/register', async (req, res) => {
     try {
+        console.log('Register request received:', req.body);
         const { name, email, password, role } = req.body;
 
-        // Check if admin already exists
         let admin = await Admin.findOne({ email });
         if (admin) return res.status(400).json({ error: 'Admin already exists' });
 
-        // Hash password before saving
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create new admin
-        admin = new Admin({
-            name,
-            email,
-            password: hashedPassword,
-            role: role || 'admin' // Default role 'admin'
-        });
-
+        admin = new Admin({ name, email, password: hashedPassword, role: role || 'admin' });
         await admin.save();
+
         res.status(201).json({ message: 'Admin registered successfully' });
     } catch (error) {
+        console.error('Error in register:', error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 
 // Admin Login

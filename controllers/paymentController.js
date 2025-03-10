@@ -48,10 +48,11 @@ exports.getPayments = async (req, res) => {
         }
 
         res.json(payments);
-    } catch (error) {
-        console.error("❌ Error Fetching Payments:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+    }catch (error) {
+        console.error("Error Details:", error); // Detailed Error Logging
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
+    
 };
 
 
@@ -78,9 +79,10 @@ exports.createPayment = async (req, res) => {
         await payment.save();
         res.status(201).json(payment);
     } catch (error) {
-        console.error("❌ Error Creating Payment:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error Details:", error); // Detailed Error Logging
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
+    
 };
 
 
@@ -90,9 +92,10 @@ exports.getAllPayments = async (req, res) => {
         const payments = await Payment.find().populate("bookingId");
         res.json(payments);
     } catch (error) {
-        console.error("❌ Error Fetching All Payments:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error Details:", error); // Detailed Error Logging
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
+    
 };
 
 // 🔹 Get Payment by ID
@@ -105,9 +108,10 @@ exports.getPaymentById = async (req, res) => {
         }
         res.json(payment);
     } catch (error) {
-        console.error("❌ Error Fetching Payment by ID:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error Details:", error); // Detailed Error Logging
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
+    
 };
 
 // 🔹 Delete Payment
@@ -120,7 +124,8 @@ exports.deletePayment = async (req, res) => {
         }
         res.json({ message: "Payment deleted successfully" });
     } catch (error) {
-        console.error("❌ Error Deleting Payment:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error Details:", error); // Detailed Error Logging
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
+    
 };
