@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
-require('dotenv').config()
-const dbUrl = process.env.DB_URL || 'mongodb+srv://admin:admin07@cluster0.mer5k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+require('dotenv').config();
 
-const connectToMongo = () => {
-    mongoose.set("strictQuery", false);
-    mongoose.connect(dbUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }).then(() => {
-        console.log("DATABASE CONNECTED");
-    }).catch(err => {
-        console.error("OH NO ERROR!!!!", err.message);
-    });
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connected Successfully');
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  }
+};
 
-
-module.exports = connectToMongo;
+module.exports = connectDB;
