@@ -2,7 +2,7 @@
   "name": "student-teacher-booking-appointment",
   "version": "1.0.0",
   "description": ".env file\r db_conn=''\r JWT_KEY =",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"

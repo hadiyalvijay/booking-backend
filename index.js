@@ -1,12 +1,12 @@
 const express = require('express');
-const connectDB = require('./db'); // Database connection
+const connectToMongo = require('./db'); // Database connection
 const cors = require('cors');
 const path = require('path');
 
 const app = express();
 
 // Connect to database
-connectDB();
+connectToMongo();
 
 // Middleware
 app.use(express.json());
