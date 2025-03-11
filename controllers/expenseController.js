@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = path.join(__dirname, '../uploads');
+const uploadDir = path.join(__dirname, '../frontend/uploads');
 
 // Ensure the uploads directory exists (For normal server environments)
 if (!fs.existsSync(uploadDir)) {
@@ -180,7 +180,7 @@ exports.deleteExpense = async (req, res) => {
 
         // Delete the receipt file if it exists
         if (expense.receipt) {
-            const filePath = path.join(__dirname, '../frontend/public', expense.receipt);
+            const filePath = path.join(__dirname, '../frontend/uploads', expense.receipt);
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath); // Delete file from storage
             }
