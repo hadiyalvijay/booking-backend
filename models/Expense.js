@@ -6,7 +6,6 @@ const ExpenseSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   expenseDate: { type: Date, required: true },
   paymentMethod: { type: String, required: true },
-  receipt: { type: String }, // URL for uploaded receipt file
   notes: { type: String }
 }, { timestamps: true });
 
