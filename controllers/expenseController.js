@@ -3,23 +3,20 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure the uploads directory exists
-const uploadDir = path.join(__dirname, '../frontend/uploads');
+const uploadDir = path.join(__dirname, '../uploads');
+
+// Ensure the uploads directory exists (For normal server environments)
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-
 // Configure Multer Storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log('Uploading file to:', uploadDir); // Debugging
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        const filename = Date.now() + path.extname(file.originalname);
-        console.log('File saved as:', filename); // Debugging
-        cb(null, filename);
+        cb(null, Date.now() + path.extname(file.originalname));
     }
 });
 
@@ -198,5 +195,5 @@ exports.deleteExpense = async (req, res) => {
     }
 };
 
-// Export the Multer Upload Middleware
+
 exports.upload = upload;
