@@ -5,15 +5,11 @@
 
     const uploadDir = process.env.NODE_ENV === 'production' ? '/tmp/uploads' : path.join(__dirname, '../../frontend/uploads');
 
-if (process.env.NODE_ENV === 'production') {
+    // Ensure directory exists
     if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
     }
-} else {
-    if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true });
-    }
-}
+    
 
     // Configure Multer Storage
     const storage = multer.diskStorage({
