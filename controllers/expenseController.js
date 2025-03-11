@@ -3,9 +3,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = path.join(__dirname, '../frontend/uploads');
+const uploadDir = path.join(__dirname, '../../frontend/uploads');
 
-// Ensure the uploads directory exists (For normal server environments)
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
