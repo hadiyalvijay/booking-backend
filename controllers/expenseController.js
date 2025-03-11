@@ -4,10 +4,11 @@ const path = require('path');
 const fs = require('fs');
 
 // Ensure the uploads directory exists
-const uploadDir = '../frontend/uploads';
+const uploadDir = path.join(__dirname, '../frontend/uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 // Configure Multer Storage
 const storage = multer.diskStorage({
