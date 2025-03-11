@@ -1,27 +1,29 @@
     const Expense = require('../models/Expense');
     const multer = require('multer');
+    const multerS3 = require('multer-s3');
     const path = require('path');
     const fs = require('fs');
 
-    const uploadDir = process.env.NODE_ENV === 'production' ? '/tmp/uploads' : path.join(__dirname, '../../frontend/uploads');
+    const AWS = require('aws-sdk');
 
-    // Ensure directory exists
-    if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    const s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+        region: process.env.AWS_REGION
+    });
     
-
-    // Configure Multer Storage
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, uploadDir);
-        },
-        filename: (req, file, cb) => {
-            cb(null, Date.now() + path.extname(file.originalname));
-        }
+    const upload = multer({
+        storage: multerS3({
+            s3,
+            bucket: process.env.S3_BUCKET_NAME,  // ⬅️ AWS S3 bucket name (Use .env)
+            acl: 'public-read',  // ⬅️ Public access for images (optional)
+            key: (req, file, cb) => {
+                cb(null, `uploads/${Date.now()}_${file.originalname}`);
+            }
+        })
     });
 
-    const upload = multer({ storage });
+    // const upload = multer({ storage });
 
     // Create Expense
     exports.createExpense = async (req, res) => {
